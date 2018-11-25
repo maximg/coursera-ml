@@ -106,18 +106,18 @@ fprintf(' %f \n', theta);
 fprintf('Expected theta (approx):\n');
 fprintf(' -25.161\n 0.206\n 0.201\n');
 
-% Plot Boundary
-plotDecisionBoundary(theta, X, y);
+% % Plot Boundary
+% plotDecisionBoundary(theta, X, y);
 
-% Put some labels 
-hold on;
-% Labels and Legend
-xlabel('Exam 1 score')
-ylabel('Exam 2 score')
+% % Put some labels 
+% hold on;
+% % Labels and Legend
+% xlabel('Exam 1 score')
+% ylabel('Exam 2 score')
 
-% Specified in plot order
-legend('Admitted', 'Not admitted')
-hold off;
+% % Specified in plot order
+% legend('Admitted', 'Not admitted')
+% hold off;
 
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
