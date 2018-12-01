@@ -62,16 +62,30 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X = [ones(m, 1) X];
 
+for i = 1:m
 
+    x = X(i,:);
 
+    % forward propagation
+    
+    z2 = x * Theta1';
+    a2 = sigmoid(z2);
+    a2 = [ones(size(a2,1),1) a2];
 
+    z3 = a2 * Theta2';
+    a3 = sigmoid(z3);
 
+    % a3 has h(theta) for given x
 
+    yy = zeros(1,size(a3,2));
+    yy(y(i)) = 1;
 
+    J = J - ( yy * log(a3') + (1 - yy) * log(1 - a3'));
+end
 
-
-
+J = J / m;
 
 
 
