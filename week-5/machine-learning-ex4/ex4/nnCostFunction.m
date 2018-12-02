@@ -64,34 +64,49 @@ Theta2_grad = zeros(size(Theta2));
 
 X = [ones(m, 1) X];
 
-for i = 1:m
+% forward propagation
 
-    x = X(i,:);
+Z2 = X * Theta1';
+A2 = [ones(size(Z2,1),1) sigmoid(Z2)];
 
-    % forward propagation
-    
-    z2 = x * Theta1';
-    a2 = sigmoid(z2);
-    a2 = [ones(size(a2,1),1) a2];
+Z3 = A2 * Theta2';
+A3 = sigmoid(Z3);
 
-    z3 = a2 * Theta2';
-    a3 = sigmoid(z3);
+y_matrix = eye(num_labels)(y,:);    % neat!
 
-    % a3 has h(theta) for given x
+J = sum(sum( - y_matrix .* log(A3) - (1 - y_matrix) .* log(1 - A3) )) / m;
 
-    yy = zeros(1,size(a3,2));
-    yy(y(i)) = 1;
+% regularize
 
-    J = J - ( yy * log(a3') + (1 - yy) * log(1 - a3'));
-end
+theta1_reg = Theta1(:,2:end)(:);
+theta2_reg = Theta2(:,2:end)(:);
 
-J = J / m;
+J = J + lambda / (2.0 * m) * ...
+    (theta1_reg' * theta1_reg + theta2_reg' * theta2_reg);
 
+% % backpropagation
 
+% Delta_1 = zeros(size(Theta1));
+% Delta_2 = zeros(size(Theta2));
 
+% for i = 1:m
 
+%     yy(y(i)) = 1;
 
+%     delta_3 = a3 - yy;              % 1 row, 10
+%     delta_2 = (delta_3 * Theta2)(:,2:end);
+%     delta_2 = delta_2 .* sigmoidGradient(z2);
 
+%     Delta_1 = Delta_1 + delta_2' * x;
+%     Delta_2 = Delta_2 + delta_3' * a2;
+
+% end
+
+% Delta_1(:,1) = zeros(size(Delta_1,1),1);
+% Delta_2(:,1) = zeros(size(Delta_2,1),1);
+
+% Theta1_grad = 1.0 / m * Delta_1;
+% Theta2_grad = 1.0 / m * Delta_2;
 
 
 % -------------------------------------------------------------
