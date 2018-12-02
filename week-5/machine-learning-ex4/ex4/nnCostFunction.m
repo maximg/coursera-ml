@@ -101,6 +101,15 @@ Delta_1 = Delta_1 + SmallDelta_2' * X;
 Theta1_grad = 1.0 / m * Delta_1;
 Theta2_grad = 1.0 / m * Delta_2;
 
+% regularization
+
+Theta1_grad_reg = lambda / m * Theta1;
+Theta1_grad_reg(:,1) = zeros(size(Theta1,1),1);
+Theta2_grad_reg = lambda / m * Theta2;
+Theta2_grad_reg(:,1) = zeros(size(Theta2,1),1);
+
+Theta1_grad = Theta1_grad + Theta1_grad_reg;
+Theta2_grad = Theta2_grad + Theta2_grad_reg;
 
 % -------------------------------------------------------------
 
