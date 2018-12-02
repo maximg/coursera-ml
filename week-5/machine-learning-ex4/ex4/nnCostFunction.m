@@ -84,29 +84,22 @@ theta2_reg = Theta2(:,2:end)(:);
 J = J + lambda / (2.0 * m) * ...
     (theta1_reg' * theta1_reg + theta2_reg' * theta2_reg);
 
-% % backpropagation
+% backpropagation
 
-% Delta_1 = zeros(size(Theta1));
-% Delta_2 = zeros(size(Theta2));
+Delta_1 = zeros(size(Theta1));
+Delta_2 = zeros(size(Theta2));
 
-% for i = 1:m
+Delta_3 = A3 - y_matrix;
 
-%     yy(y(i)) = 1;
+Delta_2 = Delta_2 + Delta_3' * A2;
 
-%     delta_3 = a3 - yy;              % 1 row, 10
-%     delta_2 = (delta_3 * Theta2)(:,2:end);
-%     delta_2 = delta_2 .* sigmoidGradient(z2);
+SmallDelta_2 = (Delta_3 * Theta2)(:,2:end);
+SmallDelta_2 = SmallDelta_2 .* sigmoidGradient(Z2);
+Delta_1 = Delta_1 + SmallDelta_2' * X;
 
-%     Delta_1 = Delta_1 + delta_2' * x;
-%     Delta_2 = Delta_2 + delta_3' * a2;
 
-% end
-
-% Delta_1(:,1) = zeros(size(Delta_1,1),1);
-% Delta_2(:,1) = zeros(size(Delta_2,1),1);
-
-% Theta1_grad = 1.0 / m * Delta_1;
-% Theta2_grad = 1.0 / m * Delta_2;
+Theta1_grad = 1.0 / m * Delta_1;
+Theta2_grad = 1.0 / m * Delta_2;
 
 
 % -------------------------------------------------------------
