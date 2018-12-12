@@ -21,17 +21,14 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-for i = 1:size(X,1)
-    errs = zeros(1, K);
-    for j = 1:K
-        err = X(i,:) - centroids(j,:);
-        errs(j) = err * err';
-    end
-
-    [minErr, minIdx] = min(errs);
-    idx(i) = minIdx;
+errs = zeros(size(X,1), K);
+for j = 1:K
+    centroid = centroids(j,:);
+    err = X - centroid;
+    errs(:,j) = diag(err * err');
 end
-
+[minErr, minIdx] = min(errs, [], 2);
+idx = minIdx;
 
 % =============================================================
 
